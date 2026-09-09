@@ -1,5 +1,7 @@
 package org.aryan.smart_campus_platform.controller;
 
+import org.aryan.smart_campus_platform.dto.StudentRequest;
+import org.aryan.smart_campus_platform.dto.StudentResponse;
 import org.aryan.smart_campus_platform.entity.Student;
 import org.aryan.smart_campus_platform.service.StudentService;
 
@@ -25,24 +27,24 @@ public class StudentController {
     }
 
     @GetMapping("/students")
-    public List<Student> getAllStudents() {
+    public List<StudentResponse> getAllStudents() {
         return studentService.getAllStudents();
     }
 
     @GetMapping("/students/{id}")
-    public Student getStudentById(@PathVariable int id) {
+    public StudentResponse getStudentById(@PathVariable int id) {
         return studentService.getStudentById(id);
     }
 
     @PostMapping("/students")
-    public Student createStudent(@RequestBody @Valid Student student) {
-        return studentService.createStudent(student);
+    public StudentResponse createStudent(@RequestBody @Valid StudentRequest studentRequest) {
+        return studentService.createStudent(studentRequest);
     }
 
     @PutMapping("/students/{id}")
-    public Student updateStudent(@PathVariable int id,
-                                 @RequestBody @Valid Student student) {
-        return studentService.updateStudent(id, student);
+    public StudentResponse updateStudent(@PathVariable int id,
+                                 @RequestBody @Valid StudentRequest studentRequest) {
+        return studentService.updateStudent(id, studentRequest);
     }
 
     @DeleteMapping("/students/{id}")
