@@ -1,6 +1,7 @@
 package org.aryan.smart_campus_platform.service;
 
 import org.aryan.smart_campus_platform.entity.Student;
+import org.aryan.smart_campus_platform.exception.StudentNotFoundException;
 import org.aryan.smart_campus_platform.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,9 @@ public class StudentService {
 
     public Student getStudentById(int id) {
         return studentRepository.findById(id)
-                .orElse(new Student());
+                .orElseThrow(() -> new StudentNotFoundException(
+                        "Student not found with id: " + id
+                ));
     }
 
     public Student createStudent(Student student) {
@@ -31,7 +34,9 @@ public class StudentService {
     public Student updateStudent(int id, Student student) {
 
         Student existingStudent = studentRepository.findById(id)
-                .orElse(new Student());
+                .orElseThrow(() -> new StudentNotFoundException(
+                        "Student not found with id: " + id
+                ));
 
         existingStudent.setName(student.getName());
         existingStudent.setCollege(student.getCollege());
@@ -45,5 +50,4 @@ public class StudentService {
     public void deleteStudent(int id) {
         studentRepository.deleteById(id);
     }
-
 }

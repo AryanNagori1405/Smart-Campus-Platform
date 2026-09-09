@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -33,12 +35,13 @@ public class StudentController {
     }
 
     @PostMapping("/students")
-    public Student createStudent(@RequestBody Student student) {
+    public Student createStudent(@RequestBody @Valid Student student) {
         return studentService.createStudent(student);
     }
 
     @PutMapping("/students/{id}")
-    public Student updateStudent(@PathVariable int id, @RequestBody Student student) {
+    public Student updateStudent(@PathVariable int id,
+                                 @RequestBody @Valid Student student) {
         return studentService.updateStudent(id, student);
     }
 
