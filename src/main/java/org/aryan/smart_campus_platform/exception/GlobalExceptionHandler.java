@@ -22,14 +22,21 @@ public class GlobalExceptionHandler {
             errors.put(error.getField(), error.getDefaultMessage());
         }
 
-        return ResponseEntity.status(400).body(errors);
+        ErrorResponse response = new ErrorResponse(
+                400,
+                "Validation failed",
+                errors
+        );
+
+        return ResponseEntity.status(400).body(response);
     }
 
     @ExceptionHandler(StudentNotFoundException.class)
     public ResponseEntity<?> handleStudentNotFoundException(
-            StudentNotFoundException e
-    ) {
+            StudentNotFoundException e) {
 
-        return ResponseEntity.status(404).body(e.getMessage());
+        ErrorResponse response = new ErrorResponse(404, e.getMessage());
+
+        return ResponseEntity.status(404).body(response);
     }
 }

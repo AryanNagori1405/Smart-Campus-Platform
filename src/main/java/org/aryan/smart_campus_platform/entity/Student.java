@@ -1,5 +1,6 @@
 package org.aryan.smart_campus_platform.entity;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +12,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@JsonPropertyOrder({"name", "email", "college", "course", "graduationYear"})
 public class Student {
 
     @Id
