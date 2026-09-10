@@ -2,7 +2,6 @@ package org.aryan.smart_campus_platform.controller;
 
 import org.aryan.smart_campus_platform.dto.StudentRequest;
 import org.aryan.smart_campus_platform.dto.StudentResponse;
-import org.aryan.smart_campus_platform.entity.Student;
 import org.aryan.smart_campus_platform.service.StudentService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
