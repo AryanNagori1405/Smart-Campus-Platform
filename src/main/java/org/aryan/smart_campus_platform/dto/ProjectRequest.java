@@ -1,6 +1,5 @@
 package org.aryan.smart_campus_platform.dto;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 public class ProjectRequest {
