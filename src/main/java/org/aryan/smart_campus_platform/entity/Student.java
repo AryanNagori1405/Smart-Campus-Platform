@@ -21,11 +21,11 @@ public class Student {
     public Student() {}
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -33,7 +33,7 @@ public class Student {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -41,7 +41,7 @@ public class Student {
     }
 
     public String getCollege() {
-        return college;
+        return this.college;
     }
 
     public void setCollege(String college) {
@@ -49,7 +49,7 @@ public class Student {
     }
 
     public String getCourse() {
-        return course;
+        return this.course;
     }
 
     public void setCourse(String course) {
@@ -57,7 +57,7 @@ public class Student {
     }
 
     public int getGraduationYear() {
-        return graduationYear;
+        return this.graduationYear;
     }
 
     public void setGraduationYear(int graduationYear) {
