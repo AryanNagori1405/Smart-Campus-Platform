@@ -4,6 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Student {
@@ -17,6 +22,13 @@ public class Student {
     private String college;
     private String course;
     private int graduationYear;
+
+    @OneToMany(
+            mappedBy = "student",
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true
+    )
+    private List<Project> projects = new ArrayList<>();
 
     public Student() {}
 
@@ -62,5 +74,13 @@ public class Student {
 
     public void setGraduationYear(int graduationYear) {
         this.graduationYear = graduationYear;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 }
