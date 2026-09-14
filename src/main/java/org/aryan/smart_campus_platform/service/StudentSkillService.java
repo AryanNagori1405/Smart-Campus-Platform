@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentSkillService {
@@ -55,5 +56,28 @@ public class StudentSkillService {
                 ));
 
         return studentSkillMapper.toResponse(student);
+    }
+
+    public void removeSkill(int studentId, int skillId) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new StudentNotFoundException(
+                        "Student not found with id: " + studentId
+                ));
+
+        Optional<Skill> skillToRemove = student.getSkills()
+                .stream()
+                .filter(skill -> skill.getId() == skillId)
+                .findFirst();
+
+        if (skillToRemove.isEmpty()) {
+            throw new SkillNotFoundException(
+                    "Skill with id " + skillId +
+                    " is not assigned to student " + studentId
+            );
+        }
+
+        student.getSkills().remove(skillToRemove.get());
+
+        studentRepository.save(student);
     }
 }

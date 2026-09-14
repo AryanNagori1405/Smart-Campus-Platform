@@ -31,4 +31,10 @@ public class StudentSkillController {
     public StudentSkillResponse getSkills(@PathVariable int studentId) {
         return studentSkillService.getSkills(studentId);
     }
+
+    @DeleteMapping("/{studentId}/skills/{skillId}")
+    public void removeSkill(@PathVariable int studentId,
+                            @PathVariable int skillId) {
+        studentSkillService.removeSkill(studentId, skillId);
+    }
 }
