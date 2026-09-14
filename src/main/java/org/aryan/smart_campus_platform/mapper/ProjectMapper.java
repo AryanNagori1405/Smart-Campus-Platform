@@ -1,7 +1,7 @@
 package org.aryan.smart_campus_platform.mapper;
 
-import org.aryan.smart_campus_platform.dto.ProjectRequest;
-import org.aryan.smart_campus_platform.dto.ProjectResponse;
+import org.aryan.smart_campus_platform.dto.request.ProjectRequest;
+import org.aryan.smart_campus_platform.dto.response.ProjectResponse;
 import org.aryan.smart_campus_platform.entity.Project;
 import org.springframework.stereotype.Component;
 

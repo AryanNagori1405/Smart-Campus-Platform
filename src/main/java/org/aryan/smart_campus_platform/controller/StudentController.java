@@ -1,7 +1,7 @@
 package org.aryan.smart_campus_platform.controller;
 
-import org.aryan.smart_campus_platform.dto.StudentRequest;
-import org.aryan.smart_campus_platform.dto.StudentResponse;
+import org.aryan.smart_campus_platform.dto.request.StudentRequest;
+import org.aryan.smart_campus_platform.dto.response.StudentResponse;
 import org.aryan.smart_campus_platform.service.StudentService;
 
 import jakarta.validation.Valid;

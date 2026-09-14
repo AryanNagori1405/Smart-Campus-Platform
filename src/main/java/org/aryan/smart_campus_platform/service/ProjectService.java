@@ -1,7 +1,7 @@
 package org.aryan.smart_campus_platform.service;
 
-import org.aryan.smart_campus_platform.dto.ProjectRequest;
-import org.aryan.smart_campus_platform.dto.ProjectResponse;
+import org.aryan.smart_campus_platform.dto.request.ProjectRequest;
+import org.aryan.smart_campus_platform.dto.response.ProjectResponse;
 import org.aryan.smart_campus_platform.entity.Project;
 import org.aryan.smart_campus_platform.entity.Student;
 import org.aryan.smart_campus_platform.exception.StudentNotFoundException;

@@ -1,4 +1,4 @@
-package org.aryan.smart_campus_platform.dto;
+package org.aryan.smart_campus_platform.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;

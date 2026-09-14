@@ -1,4 +1,4 @@
-package org.aryan.smart_campus_platform.dto;
+package org.aryan.smart_campus_platform.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
