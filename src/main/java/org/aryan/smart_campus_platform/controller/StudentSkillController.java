@@ -26,4 +26,9 @@ public class StudentSkillController {
                 studentSkillsRequest
         );
     }
+
+    @GetMapping("/{studentId}/skills")
+    public StudentSkillResponse getSkills(@PathVariable int studentId) {
+        return studentSkillService.getSkills(studentId);
+    }
 }

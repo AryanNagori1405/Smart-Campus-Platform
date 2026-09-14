@@ -1,14 +1,6 @@
 package org.aryan.smart_campus_platform.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -41,6 +33,7 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
+    @OrderBy("id ASC")
     private Set<Skill> skills = new HashSet<>();
 
     public Student() {}
