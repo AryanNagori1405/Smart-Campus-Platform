@@ -16,6 +16,8 @@ public class Skill {
     @NotBlank
     private String name;
 
+    private String normalizedName;
+
     public Skill() {}
 
     public int getId() {
@@ -28,5 +30,13 @@ public class Skill {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNormalizedName() {
+        return normalizedName;
+    }
+
+    public void setNormalizedName(String normalizedName) {
+        this.normalizedName = normalizedName;
     }
 }
