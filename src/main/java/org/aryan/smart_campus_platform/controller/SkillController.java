@@ -24,4 +24,6 @@ public class SkillController {
             @RequestBody @Valid SkillRequest skillRequest) {
         return skillService.createSkill(skillRequest);
     }
+
+
 }

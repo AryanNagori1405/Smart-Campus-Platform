@@ -1,0 +1,49 @@
+package org.aryan.smart_campus_platform.service;
+
+import org.aryan.smart_campus_platform.dto.request.StudentSkillsRequest;
+import org.aryan.smart_campus_platform.dto.response.StudentSkillResponse;
+import org.aryan.smart_campus_platform.entity.Skill;
+import org.aryan.smart_campus_platform.entity.Student;
+import org.aryan.smart_campus_platform.exception.SkillNotFoundException;
+import org.aryan.smart_campus_platform.exception.StudentNotFoundException;
+import org.aryan.smart_campus_platform.mapper.StudentSkillMapper;
+import org.aryan.smart_campus_platform.repository.SkillRepository;
+import org.aryan.smart_campus_platform.repository.StudentRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class StudentSkillService {
+
+    private final StudentRepository studentRepository;
+    private final SkillRepository skillRepository;
+    private final StudentSkillMapper studentSkillMapper;
+
+    public StudentSkillService(
+            StudentRepository studentRepository,
+            SkillRepository skillRepository,
+            StudentSkillMapper studentSkillMapper) {
+        this.studentRepository = studentRepository;
+        this.skillRepository = skillRepository;
+        this.studentSkillMapper = studentSkillMapper;
+    }
+
+    public StudentSkillResponse assignSkills(int studentId, StudentSkillsRequest request) {
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new StudentNotFoundException(
+                        "Student not found with id: " + studentId
+                ));
+
+        List<Integer> skillIds = request.getSkillIds();
+        List<Skill> skills = skillRepository.findAllById(skillIds);
+
+        if (skillIds.size() != skills.size()) {
+            throw new SkillNotFoundException("One or more skills not found");
+        }
+
+        student.getSkills().addAll(skills);
+
+        return studentSkillMapper.toResponse(studentRepository.save(student));
+    }
+}
