@@ -4,6 +4,7 @@ import org.aryan.smart_campus_platform.dto.request.StudentSkillsRequest;
 import org.aryan.smart_campus_platform.dto.response.StudentSkillResponse;
 import org.aryan.smart_campus_platform.entity.Skill;
 import org.aryan.smart_campus_platform.entity.Student;
+import org.aryan.smart_campus_platform.exception.SkillAlreadyAssignedException;
 import org.aryan.smart_campus_platform.exception.SkillNotFoundException;
 import org.aryan.smart_campus_platform.exception.StudentNotFoundException;
 import org.aryan.smart_campus_platform.mapper.StudentSkillMapper;
@@ -42,6 +43,20 @@ public class StudentSkillService {
 
         if (skillIds.size() != skills.size()) {
             throw new SkillNotFoundException("One or more skills not found");
+        }
+
+        for (Skill skill : skills) {
+            boolean alreadyAssigned = student.getSkills()
+                    .stream()
+                    .anyMatch(existingSkill ->
+                            existingSkill.getId() == skill.getId()
+                    );
+
+            if (alreadyAssigned) {
+                throw new SkillAlreadyAssignedException(
+                        "Skill already assigned to this student: " + skill.getName()
+                );
+            }
         }
 
         student.getSkills().addAll(skills);

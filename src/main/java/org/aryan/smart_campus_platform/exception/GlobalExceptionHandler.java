@@ -60,4 +60,13 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
+
+    @ExceptionHandler(SkillAlreadyAssignedException.class)
+    public ResponseEntity<ErrorResponse> handleSkillAlreadyAssignedException(
+            SkillAlreadyAssignedException e) {
+
+        ErrorResponse response = new ErrorResponse(409, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
 }
