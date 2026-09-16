@@ -11,7 +11,6 @@ import org.aryan.smart_campus_platform.mapper.StudentSkillMapper;
 import org.aryan.smart_campus_platform.repository.SkillRepository;
 import org.aryan.smart_campus_platform.repository.StudentRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;

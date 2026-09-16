@@ -7,9 +7,9 @@ import org.aryan.smart_campus_platform.exception.StudentNotFoundException;
 import org.aryan.smart_campus_platform.mapper.StudentMapper;
 import org.aryan.smart_campus_platform.repository.StudentRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class StudentService {
@@ -23,11 +23,10 @@ public class StudentService {
         this.studentMapper = studentMapper;
     }
 
-    public List<StudentResponse> getAllStudents() {
-        return studentRepository.findAll()
-                .stream()
-                .map(studentMapper::toResponse)
-                .toList();
+    public Page<StudentResponse> getAllStudents(Pageable pageable) {
+        Page<Student> students = studentRepository.findAll(pageable);
+
+        return students.map(studentMapper::toResponse);
     }
 
     public StudentResponse getStudentById(int id) {
