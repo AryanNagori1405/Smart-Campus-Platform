@@ -4,10 +4,6 @@ import org.aryan.smart_campus_platform.dto.request.StudentRequest;
 import org.aryan.smart_campus_platform.dto.response.StudentResponse;
 import org.aryan.smart_campus_platform.service.StudentService;
 
-import jakarta.validation.Valid;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+
+import jakarta.validation.Valid;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 @RestController
 @RequestMapping("/students")
@@ -28,7 +30,8 @@ public class StudentController {
     }
 
     @GetMapping
-    public Page<StudentResponse> getAllStudents(Pageable pageable) {
+    public Page<StudentResponse> getAllStudents(
+            @PageableDefault(size = 20) Pageable pageable) {
         return studentService.getAllStudents(pageable);
     }
 
