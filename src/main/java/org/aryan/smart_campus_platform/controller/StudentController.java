@@ -4,14 +4,7 @@ import org.aryan.smart_campus_platform.dto.request.StudentRequest;
 import org.aryan.smart_campus_platform.dto.response.StudentResponse;
 import org.aryan.smart_campus_platform.service.StudentService;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
@@ -31,7 +24,18 @@ public class StudentController {
 
     @GetMapping
     public Page<StudentResponse> getAllStudents(
-            @PageableDefault(size = 20) Pageable pageable) {
+            @PageableDefault(size = 20) Pageable pageable,
+            @RequestParam(required = false) String college,
+            @RequestParam(required = false) Integer graduationYear) {
+
+        if (college != null && !college.isBlank()) {
+            return studentService.getStudentsByCollege(college, pageable);
+        }
+
+        if (graduationYear != null) {
+            return studentService.getStudentsByGraduationYear(graduationYear, pageable);
+        }
+
         return studentService.getAllStudents(pageable);
     }
 

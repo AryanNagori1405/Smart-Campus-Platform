@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StudentService {
-
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
 
@@ -65,5 +64,19 @@ public class StudentService {
 
     public void deleteStudent(int id) {
         studentRepository.deleteById(id);
+    }
+
+    public Page<StudentResponse> getStudentsByCollege(String college, Pageable pageable) {
+
+        return studentRepository.findByCollegeContaining(college, pageable)
+                .map(studentMapper::toResponse);
+    }
+
+    public Page<StudentResponse> getStudentsByGraduationYear(
+            int graduationYear,
+            Pageable pageable) {
+
+        return studentRepository.findByGraduationYearGreaterThan(graduationYear, pageable)
+                .map(studentMapper::toResponse);
     }
 }
