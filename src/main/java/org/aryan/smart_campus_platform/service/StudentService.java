@@ -24,12 +24,6 @@ public class StudentService {
         this.studentMapper = studentMapper;
     }
 
-    public Page<StudentResponse> getAllStudents(Pageable pageable) {
-        Page<Student> students = studentRepository.findAll(pageable);
-
-        return students.map(studentMapper::toResponse);
-    }
-
     public StudentResponse getStudentById(int id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(
