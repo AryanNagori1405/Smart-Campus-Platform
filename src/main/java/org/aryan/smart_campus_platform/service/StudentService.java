@@ -87,4 +87,15 @@ public class StudentService {
         return studentRepository.findAll(specification, pageable)
                 .map(studentMapper::toResponse);
     }
+
+    public Page<StudentResponse> getStudentsGraduatingAfter(int year, Pageable pageable) {
+        return studentRepository
+                .findStudentsGraduatingAfter(year, pageable)
+                .map(studentMapper::toResponse);
+    }
+
+    public Page<StudentResponse> getStudentByCollege(String college, Pageable pageable) {
+        return studentRepository.findStudentsByCollege(college, pageable)
+                .map(studentMapper::toResponse);
+    }
 }

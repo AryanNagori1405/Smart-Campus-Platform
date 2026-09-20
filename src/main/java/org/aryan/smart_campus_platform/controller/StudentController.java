@@ -55,4 +55,16 @@ public class StudentController {
     public void deleteStudent(@PathVariable int id) {
         studentService.deleteStudent(id);
     }
+
+    @GetMapping("/graduating-after/{year}")
+    public Page<StudentResponse> getStudentsGraduatingAfter(@PathVariable int year, Pageable pageable) {
+        return studentService.getStudentsGraduatingAfter(year, pageable);
+    }
+
+    @GetMapping("/college/{college}")
+    public Page<StudentResponse> getStudentByCollege(
+            @PathVariable String college,
+            Pageable pageable) {
+        return studentService.getStudentByCollege(college, pageable);
+    }
 }
