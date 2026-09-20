@@ -28,15 +28,11 @@ public class StudentController {
             @RequestParam(required = false) String college,
             @RequestParam(required = false) Integer graduationYear) {
 
-        if (college != null && !college.isBlank()) {
-            return studentService.getStudentsByCollege(college, pageable);
-        }
-
-        if (graduationYear != null) {
-            return studentService.getStudentsByGraduationYear(graduationYear, pageable);
-        }
-
-        return studentService.getAllStudents(pageable);
+        return studentService.searchStudents(
+                college,
+                graduationYear,
+                pageable
+        );
     }
 
     @GetMapping("/{id}")

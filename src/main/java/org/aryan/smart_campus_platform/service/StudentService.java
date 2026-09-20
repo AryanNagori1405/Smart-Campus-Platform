@@ -7,8 +7,10 @@ import org.aryan.smart_campus_platform.exception.StudentNotFoundException;
 import org.aryan.smart_campus_platform.mapper.StudentMapper;
 import org.aryan.smart_campus_platform.repository.StudentRepository;
 
+import org.aryan.smart_campus_platform.specification.StudentSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -66,17 +68,29 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public Page<StudentResponse> getStudentsByCollege(String college, Pageable pageable) {
-
-        return studentRepository.findByCollegeContaining(college, pageable)
-                .map(studentMapper::toResponse);
-    }
-
-    public Page<StudentResponse> getStudentsByGraduationYear(
-            int graduationYear,
+    public Page<StudentResponse> searchStudents(
+            String college,
+            Integer graduationYear,
             Pageable pageable) {
 
-        return studentRepository.findByGraduationYearGreaterThan(graduationYear, pageable)
+        Specification<Student> specification = null;
+
+        if (college != null && !college.isBlank()) {
+            specification = StudentSpecification.collegeContains(college);
+        }
+
+        if (graduationYear != null) {
+            Specification<Student> graduationSpecification =
+                    StudentSpecification.graduationYearGreaterThan(graduationYear);
+
+            if (specification == null) {
+                specification = graduationSpecification;
+            } else {
+                specification = specification.and(graduationSpecification);
+            }
+        }
+
+        return studentRepository.findAll(specification, pageable)
                 .map(studentMapper::toResponse);
     }
 }
