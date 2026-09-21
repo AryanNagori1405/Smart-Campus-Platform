@@ -45,13 +45,11 @@ public class StudentService {
                         "Student not found with id: " + id
                 ));
 
-        Student student = studentMapper.toEntity(studentRequest);
-
-        existingStudent.setName(student.getName());
-        existingStudent.setCollege(student.getCollege());
-        existingStudent.setCourse(student.getCourse());
-        existingStudent.setEmail(student.getEmail());
-        existingStudent.setGraduationYear(student.getGraduationYear());
+        existingStudent.setName(studentRequest.getName());
+        existingStudent.setCollege(studentRequest.getCollege());
+        existingStudent.setCourse(studentRequest.getCourse());
+        existingStudent.setEmail(studentRequest.getEmail());
+        existingStudent.setGraduationYear(studentRequest.getGraduationYear());
 
         Student savedStudent = studentRepository.save(existingStudent);
 
@@ -59,7 +57,12 @@ public class StudentService {
     }
 
     public void deleteStudent(int id) {
-        studentRepository.deleteById(id);
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException(
+                        "Student not found with id: " + id
+                ));
+
+        studentRepository.delete(student);
     }
 
     public Page<StudentResponse> searchStudents(
