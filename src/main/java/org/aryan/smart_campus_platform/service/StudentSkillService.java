@@ -11,6 +11,7 @@ import org.aryan.smart_campus_platform.mapper.StudentSkillMapper;
 import org.aryan.smart_campus_platform.repository.SkillRepository;
 import org.aryan.smart_campus_platform.repository.StudentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,7 @@ public class StudentSkillService {
         this.studentSkillMapper = studentSkillMapper;
     }
 
+    @Transactional
     public StudentSkillResponse assignSkills(int studentId, StudentSkillsRequest request) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new StudentNotFoundException(

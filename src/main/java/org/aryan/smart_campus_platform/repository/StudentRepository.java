@@ -27,7 +27,7 @@ public interface StudentRepository
         SELECT s
         FROM Student s
         WHERE s.college LIKE CONCAT('%', :college, '%')
-    """)
+        """)
     Page<Student> findStudentsByCollege(
             @Param("college") String college,
             Pageable pageable
