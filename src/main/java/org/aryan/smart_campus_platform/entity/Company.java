@@ -4,6 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Company {
@@ -17,6 +22,13 @@ public class Company {
     private String description;
     private String website;
     private String location;
+
+    @OneToMany(
+            mappedBy = "company",
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true
+    )
+    private List<Job> jobs = new ArrayList<>();
 
     public Company() {}
 
@@ -66,5 +78,13 @@ public class Company {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
     }
 }
