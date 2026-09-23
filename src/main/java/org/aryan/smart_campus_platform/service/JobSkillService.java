@@ -11,6 +11,7 @@ import org.aryan.smart_campus_platform.mapper.JobSkillMapper;
 import org.aryan.smart_campus_platform.repository.JobRepository;
 import org.aryan.smart_campus_platform.repository.SkillRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,7 @@ public class JobSkillService {
         this.jobSkillMapper = jobSkillMapper;
     }
 
+    @Transactional
     public JobSkillResponse assignSkills(
             int jobId,
             JobSkillRequest request) {
