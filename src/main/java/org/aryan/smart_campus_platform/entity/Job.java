@@ -36,7 +36,7 @@ public class Job {
             joinColumns = @JoinColumn(name = "job_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
-    private Set<Skill> requiredSkill = new HashSet<>();
+    private Set<Skill> requiredSkills = new HashSet<>();
 
     public Job() {}
 
@@ -96,11 +96,11 @@ public class Job {
         this.company = company;
     }
 
-    public Set<Skill> getRequiredSkill() {
-        return requiredSkill;
+    public Set<Skill> getRequiredSkills() {
+        return requiredSkills;
     }
 
-    public void setRequiredSkill(Set<Skill> requiredSkill) {
-        this.requiredSkill = requiredSkill;
+    public void setRequiredSkills(Set<Skill> requiredSkills) {
+        this.requiredSkills = requiredSkills;
     }
 }
