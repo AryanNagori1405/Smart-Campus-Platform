@@ -4,14 +4,14 @@ import org.aryan.smart_campus_platform.dto.request.ProjectRequest;
 import org.aryan.smart_campus_platform.dto.response.ProjectResponse;
 import org.aryan.smart_campus_platform.service.ProjectService;
 
-import jakarta.validation.Valid;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 
