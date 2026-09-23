@@ -13,6 +13,7 @@ import org.aryan.smart_campus_platform.repository.SkillRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobSkillService {
@@ -64,5 +65,38 @@ public class JobSkillService {
         job.getRequiredSkills().addAll(skills);
 
         return jobSkillMapper.toResponse(jobRepository.save(job));
+    }
+
+    public JobSkillResponse getSkills(int jobId) {
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new JobNotFoundException(
+                        "Job not found with id: " + jobId
+                ));
+
+        return jobSkillMapper.toResponse(job);
+    }
+
+    public void removeSkill(int jobId, int skillId) {
+
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new JobNotFoundException(
+                        "Job not found with id: " + jobId
+                ));
+
+        Optional<Skill> skillToRemove = job.getRequiredSkills()
+                .stream()
+                .filter(skill -> skill.getId() == skillId)
+                .findFirst();
+
+        if (skillToRemove.isEmpty()) {
+            throw new SkillNotFoundException(
+                    "Skill with id " + skillId +
+                    " is not assigned to job " + jobId
+            );
+        }
+
+        job.getRequiredSkills().remove(skillToRemove.get());
+
+        jobRepository.save(job);
     }
 }
