@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/students/{studentId}/skills")
 public class StudentSkillController {
 
     private final StudentSkillService studentSkillService;
@@ -24,7 +24,7 @@ public class StudentSkillController {
         this.studentSkillService = studentSkillService;
     }
 
-    @PostMapping("/{studentId}/skills")
+    @PostMapping
     public StudentSkillResponse assignSkills(
             @PathVariable int studentId,
             @RequestBody @Valid StudentSkillsRequest studentSkillsRequest) {
@@ -35,12 +35,12 @@ public class StudentSkillController {
         );
     }
 
-    @GetMapping("/{studentId}/skills")
+    @GetMapping
     public StudentSkillResponse getSkills(@PathVariable int studentId) {
         return studentSkillService.getSkills(studentId);
     }
 
-    @DeleteMapping("/{studentId}/skills/{skillId}")
+    @DeleteMapping("/{skillId}")
     public void removeSkill(@PathVariable int studentId,
                             @PathVariable int skillId) {
         studentSkillService.removeSkill(studentId, skillId);
