@@ -74,6 +74,7 @@ public class StudentSkillService {
         return studentSkillMapper.toResponse(student);
     }
 
+    @Transactional
     public void removeSkill(int studentId, int skillId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new StudentNotFoundException(

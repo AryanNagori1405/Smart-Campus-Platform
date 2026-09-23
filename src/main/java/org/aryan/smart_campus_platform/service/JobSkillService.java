@@ -78,6 +78,7 @@ public class JobSkillService {
         return jobSkillMapper.toResponse(job);
     }
 
+    @Transactional
     public void removeSkill(int jobId, int skillId) {
 
         Job job = jobRepository.findById(jobId)
