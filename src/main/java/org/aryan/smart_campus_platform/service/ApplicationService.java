@@ -1,14 +1,13 @@
 package org.aryan.smart_campus_platform.service;
 
 import org.aryan.smart_campus_platform.dto.request.ApplicationRequest;
+import org.aryan.smart_campus_platform.dto.request.ApplicationStatusRequest;
 import org.aryan.smart_campus_platform.dto.response.ApplicationResponse;
 import org.aryan.smart_campus_platform.entity.Application;
 import org.aryan.smart_campus_platform.entity.ApplicationStatus;
 import org.aryan.smart_campus_platform.entity.Job;
 import org.aryan.smart_campus_platform.entity.Student;
-import org.aryan.smart_campus_platform.exception.ApplicationAlreadyExistsException;
-import org.aryan.smart_campus_platform.exception.JobNotFoundException;
-import org.aryan.smart_campus_platform.exception.StudentNotFoundException;
+import org.aryan.smart_campus_platform.exception.*;
 import org.aryan.smart_campus_platform.mapper.ApplicationMapper;
 import org.aryan.smart_campus_platform.repository.ApplicationRepository;
 import org.aryan.smart_campus_platform.repository.JobRepository;
@@ -73,5 +72,47 @@ public class ApplicationService {
                 applicationRepository.save(application);
 
         return applicationMapper.toResponse(savedApplication);
+    }
+
+    private boolean isValidTransition(
+            ApplicationStatus current,
+            ApplicationStatus next) {
+
+        return switch (current) {
+            case APPLIED -> next == ApplicationStatus.SHORTLISTED
+                    || next == ApplicationStatus.REJECTED;
+            case SHORTLISTED -> next == ApplicationStatus.SELECTED
+                    || next == ApplicationStatus.REJECTED;
+            default -> false;
+        };
+    }
+
+    public ApplicationResponse updateStatus(
+            int applicationId,
+            ApplicationStatusRequest request) {
+
+        Application application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new ApplicationNotFoundException(
+                        "Application not found with id: " + applicationId
+                ));
+
+        ApplicationStatus currentStatus = application.getStatus();
+        ApplicationStatus nextStatus = request.getStatus();
+
+        if (!isValidTransition(currentStatus, nextStatus)) {
+            throw new InvalidApplicationStatusTransitionException(
+                    "Cannot change application status from "
+                            + currentStatus
+                            + " to "
+                            + nextStatus
+            );
+        }
+
+        application.setStatus(nextStatus);
+
+        Application updatedApplication =
+                applicationRepository.save(application);
+
+        return applicationMapper.toResponse(updatedApplication);
     }
 }
