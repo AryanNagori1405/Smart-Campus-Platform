@@ -87,4 +87,13 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
+
+    @ExceptionHandler(ApplicationAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleApplicationAlreadyExistsException(
+            ApplicationAlreadyExistsException e) {
+
+        ErrorResponse response = new ErrorResponse(409, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
 }
