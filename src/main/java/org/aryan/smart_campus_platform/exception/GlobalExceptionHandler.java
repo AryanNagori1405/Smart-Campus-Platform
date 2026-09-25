@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
                 errors
         );
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(StudentNotFoundException.class)
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
         // 404 = resource not found
         ErrorResponse response = new ErrorResponse(404, e.getMessage());
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(SkillAlreadyExistsException.class)
@@ -95,5 +95,23 @@ public class GlobalExceptionHandler {
         ErrorResponse response = new ErrorResponse(409, e.getMessage());
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    @ExceptionHandler(InvalidApplicationStatusTransitionException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidApplicationStatusTransitionException(
+            InvalidApplicationStatusTransitionException e) {
+
+        ErrorResponse response = new ErrorResponse(400, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(ApplicationNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleApplicationNotFoundException(
+            ApplicationNotFoundException e) {
+
+        ErrorResponse response = new ErrorResponse(404, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }
