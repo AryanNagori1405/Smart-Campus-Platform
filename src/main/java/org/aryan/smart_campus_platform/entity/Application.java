@@ -27,4 +27,46 @@ public class Application {
     private ApplicationStatus status;
 
     private LocalDateTime appliedAt;
+
+    public Application() {}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
+    }
+
+    public ApplicationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ApplicationStatus status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getAppliedAt() {
+        return appliedAt;
+    }
+
+    public void setAppliedAt(LocalDateTime appliedAt) {
+        this.appliedAt = appliedAt;
+    }
 }
