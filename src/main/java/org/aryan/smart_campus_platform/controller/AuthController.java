@@ -1,6 +1,7 @@
 package org.aryan.smart_campus_platform.controller;
 
 import org.aryan.smart_campus_platform.dto.request.AccountRequest;
+import org.aryan.smart_campus_platform.dto.request.LoginRequest;
 import org.aryan.smart_campus_platform.dto.response.AccountResponse;
 import org.aryan.smart_campus_platform.service.AccountService;
 
@@ -24,6 +25,14 @@ public class AuthController {
     @PostMapping("/register")
     public AccountResponse register(
             @RequestBody @Valid AccountRequest request) {
+
         return accountService.register(request);
+    }
+
+    @PostMapping("/login")
+    public AccountResponse login(
+            @RequestBody @Valid LoginRequest request) {
+
+        return accountService.login(request);
     }
 }
