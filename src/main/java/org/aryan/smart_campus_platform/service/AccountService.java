@@ -3,12 +3,14 @@ package org.aryan.smart_campus_platform.service;
 import org.aryan.smart_campus_platform.dto.request.AccountRequest;
 import org.aryan.smart_campus_platform.dto.request.LoginRequest;
 import org.aryan.smart_campus_platform.dto.response.AccountResponse;
+import org.aryan.smart_campus_platform.dto.response.LoginResponse;
 import org.aryan.smart_campus_platform.entity.Account;
 import org.aryan.smart_campus_platform.exception.AccountNotFoundException;
 import org.aryan.smart_campus_platform.exception.EmailAlreadyExistsException;
 import org.aryan.smart_campus_platform.mapper.AccountMapper;
 import org.aryan.smart_campus_platform.repository.AccountRepository;
 
+import org.aryan.smart_campus_platform.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,13 +23,20 @@ public class AccountService {
     private final AccountMapper accountMapper;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
+    public AccountService(
+            AccountRepository accountRepository,
+            AccountMapper accountMapper,
+            PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager,
+            JwtService jwtService) {
 
-    public AccountService(AccountRepository accountRepository, AccountMapper accountMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     public AccountResponse register(AccountRequest request) {
@@ -50,19 +59,19 @@ public class AccountService {
         return accountMapper.toResponse(savedAccount);
     }
 
-    public AccountResponse login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()
                 ));
 
-        Account account = accountRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new AccountNotFoundException(
-                        "Account not found with email: "
-                                + request.getEmail()
-                ));
+        String token = jwtService.generateToken(request.getEmail());
 
-        return accountMapper.toResponse(account);
+        LoginResponse response = new LoginResponse();
+
+        response.setToken(token);
+
+        return response;
     }
 }
