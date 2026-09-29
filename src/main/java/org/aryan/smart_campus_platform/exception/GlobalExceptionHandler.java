@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
         }
 
         ErrorResponse response = new ErrorResponse(
-                400, // 400 = validation error
+                HttpStatus.BAD_REQUEST.value(),
                 "Validation failed",
                 errors
         );
@@ -36,8 +36,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleStudentNotFoundException(
             StudentNotFoundException e) {
 
-        // 404 = resource not found
-        ErrorResponse response = new ErrorResponse(404, e.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                e.getMessage()
+        );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -46,8 +48,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleSkillAlreadyExistsException(
             SkillAlreadyExistsException e) {
 
-        // 409 = resource conflict
-        ErrorResponse response = new ErrorResponse(409, e.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                e.getMessage()
+        );
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
@@ -56,7 +60,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleSkillNotFoundException(
             SkillNotFoundException e) {
 
-        ErrorResponse response = new ErrorResponse(404, e.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                e.getMessage()
+        );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -65,7 +72,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleSkillAlreadyAssignedException(
             SkillAlreadyAssignedException e) {
 
-        ErrorResponse response = new ErrorResponse(409, e.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                e.getMessage()
+        );
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
@@ -74,7 +84,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleCompanyNotFoundException(
             CompanyNotFoundException e) {
 
-        ErrorResponse response = new ErrorResponse(404, e.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                e.getMessage()
+        );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -83,7 +96,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleJobNotFoundException(
             JobNotFoundException e) {
 
-        ErrorResponse response = new ErrorResponse(404, e.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                e.getMessage()
+        );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -92,7 +108,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleApplicationAlreadyExistsException(
             ApplicationAlreadyExistsException e) {
 
-        ErrorResponse response = new ErrorResponse(409, e.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                e.getMessage()
+        );
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
@@ -101,7 +120,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleInvalidApplicationStatusTransitionException(
             InvalidApplicationStatusTransitionException e) {
 
-        ErrorResponse response = new ErrorResponse(400, e.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                e.getMessage()
+        );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
@@ -110,7 +132,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleApplicationNotFoundException(
             ApplicationNotFoundException e) {
 
-        ErrorResponse response = new ErrorResponse(404, e.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                e.getMessage()
+        );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -119,8 +144,23 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleEmailAlreadyExistsException(
             EmailAlreadyExistsException e) {
 
-        ErrorResponse response = new ErrorResponse(HttpStatus.CONFLICT.value(), e.getMessage());
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                e.getMessage()
+        );
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleAccountNotFoundException(
+            AccountNotFoundException e) {
+
+        ErrorResponse response = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                e.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }
