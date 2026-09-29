@@ -3,6 +3,7 @@ package org.aryan.smart_campus_platform.controller;
 import org.aryan.smart_campus_platform.dto.request.AccountRequest;
 import org.aryan.smart_campus_platform.dto.request.LoginRequest;
 import org.aryan.smart_campus_platform.dto.response.AccountResponse;
+import org.aryan.smart_campus_platform.dto.response.LoginResponse;
 import org.aryan.smart_campus_platform.service.AccountService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public AccountResponse login(
+    public LoginResponse login(
             @RequestBody @Valid LoginRequest request) {
 
         return accountService.login(request);
