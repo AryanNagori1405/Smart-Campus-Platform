@@ -1,5 +1,6 @@
 package org.aryan.smart_campus_platform.security;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,7 +44,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String jwt = authHeader.substring(7);
 
-        String email = jwtService.extractUsername(jwt);
+        String email;
+         try {
+             email = jwtService.extractUsername(jwt);
+         } catch (JwtException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+         }
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
 
