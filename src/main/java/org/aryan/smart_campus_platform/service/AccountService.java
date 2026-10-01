@@ -5,13 +5,14 @@ import org.aryan.smart_campus_platform.dto.request.LoginRequest;
 import org.aryan.smart_campus_platform.dto.response.AccountResponse;
 import org.aryan.smart_campus_platform.dto.response.LoginResponse;
 import org.aryan.smart_campus_platform.entity.Account;
-import org.aryan.smart_campus_platform.exception.AccountNotFoundException;
 import org.aryan.smart_campus_platform.exception.EmailAlreadyExistsException;
+import org.aryan.smart_campus_platform.exception.InvalidCredentialsException;
 import org.aryan.smart_campus_platform.mapper.AccountMapper;
 import org.aryan.smart_campus_platform.repository.AccountRepository;
 
 import org.aryan.smart_campus_platform.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -60,11 +61,17 @@ public class AccountService {
     }
 
     public LoginResponse login(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                ));
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException e) {
+            throw new InvalidCredentialsException("Invalid email or password");
+        }
 
         String token = jwtService.generateToken(request.getEmail());
 
