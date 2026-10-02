@@ -41,9 +41,8 @@ public class AccountService {
     }
 
     public AccountResponse register(AccountRequest request) {
-        boolean emailExists  = accountRepository.existsByEmail(request.getEmail());
 
-        if (emailExists ) {
+        if (accountRepository.existsByEmail(request.getEmail())) {
             throw new EmailAlreadyExistsException(
                     "Account already exists with email: " + request.getEmail()
             );
@@ -73,11 +72,11 @@ public class AccountService {
             throw new InvalidCredentialsException("Invalid email or password");
         }
 
-        String token = jwtService.generateToken(request.getEmail());
+        String generatedToken = jwtService.generateToken(request.getEmail());
 
         LoginResponse response = new LoginResponse();
 
-        response.setToken(token);
+        response.setToken(generatedToken);
 
         return response;
     }
