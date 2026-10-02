@@ -3,6 +3,7 @@ package org.aryan.smart_campus_platform.config;
 import org.aryan.smart_campus_platform.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -32,6 +33,16 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
+
+                        .requestMatchers(HttpMethod.POST, "/companies/*/jobs")
+                        .hasAuthority("RECRUITER")
+
+                        .requestMatchers(HttpMethod.PUT, "/jobs/*")
+                        .hasAuthority("RECRUITER")
+
+                        .requestMatchers(HttpMethod.DELETE, "/jobs/*")
+                        .hasAuthority("RECRUITER")
+
                         .anyRequest().authenticated()
                 )
 
