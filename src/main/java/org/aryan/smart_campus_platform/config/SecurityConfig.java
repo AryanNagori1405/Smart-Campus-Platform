@@ -43,6 +43,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/jobs/*")
                         .hasAuthority("RECRUITER")
 
+                        .requestMatchers("/admin/**")
+                        .hasAuthority("ADMIN")
+
                         .anyRequest().authenticated()
                 )
 
