@@ -93,7 +93,7 @@ public class StudentService {
 
         if (loggedInStudent.getId() != id) {
             throw new AccessDeniedException(
-                    "You are not allowed to update this student"
+                    "You are not allowed to access this student profile"
             );
         }
 
