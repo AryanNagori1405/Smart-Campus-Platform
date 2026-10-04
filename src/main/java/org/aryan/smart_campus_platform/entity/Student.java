@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OrderBy;
+import jakarta.persistence.OneToOne;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -44,6 +45,10 @@ public class Student {
     )
     @OrderBy("id ASC")
     private Set<Skill> skills = new HashSet<>();
+
+    @OneToOne
+    @JoinColumn(name = "account_id", unique = true)
+    private Account account;
 
     public Student() {}
 
@@ -105,5 +110,13 @@ public class Student {
 
     public void setSkills(Set<Skill> skills) {
         this.skills = skills;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
