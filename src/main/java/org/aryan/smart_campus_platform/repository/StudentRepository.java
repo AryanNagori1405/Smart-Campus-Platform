@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface StudentRepository
         extends JpaRepository<Student, Integer>,
                 JpaSpecificationExecutor<Student> {
@@ -32,4 +34,6 @@ public interface StudentRepository
             @Param("college") String college,
             Pageable pageable
     );
+
+    Optional<Student> findByAccountEmail(String email);
 }
